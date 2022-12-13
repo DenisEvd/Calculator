@@ -1,5 +1,5 @@
 import unittest
-from Calculator import Calculator
+from src.Calculator import Calculator
 class TestCalculator(unittest.TestCase):
     def setUp(self):
         self.calculator = Calculator()
@@ -11,5 +11,7 @@ class TestCalculator(unittest.TestCase):
         self.assertEqual(self.calculator.multiply(3,7), 21)
     def test_divide(self):
         self.assertEqual(self.calculator.divide(10,2), 5)
+    def test_divide(self):
+        self.assertEqual(self.calculator.divide(30, 3), 10)
 if __name__ == "__main__":
   unittest.main()
