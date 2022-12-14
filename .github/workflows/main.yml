@@ -15,23 +15,22 @@ jobs:
           pytest
   compile:
     needs: [run_tests]
-    runs-on: [ubuntu-latest]
+    runs-on: windows-latest
+
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-      - name: compile to exe
-        run: |
-          pip install pyinstaller
-          pyinstaller --onefile main.py
-      - name: Archive production artifacts
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.x' # Version range or exact version of a Python version to use, using SemVer's version range syntax
+          architecture: 'x64' # optional x64 or x86. Defaults to x64 if not specified
+
+      - uses: Nuitka/Nuitka-Action@v0.4
+        with:
+          script-name: hello_world.py
+      - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
-          name: CalcMain
-          path: |
-            dist
-            !dist/**/*.exe
-      - name: Archive code coverage results
-        uses: actions/upload-artifact@v3
-        with:
-          name: code-coverage-report
-          path: output/test/code-coverage.html
+          name: exe
+          path: build/hello_world.exe
+
