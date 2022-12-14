@@ -28,8 +28,8 @@ jobs:
         with:
           name: CalcMain
           path: |
-            Calc
-            build/Calc.exe
+            dist
+            !dist/**/*.exe
       - name: Archive code coverage results
         uses: actions/upload-artifact@v3
         with:
