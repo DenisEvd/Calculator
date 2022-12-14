@@ -22,7 +22,7 @@ jobs:
       - name: compile to exe
         run: |
           pip install pyinstaller
-          pyinstaller --onefile lablISR/main.py
+          pyinstaller --onefile labISR/main.py
       - name: Archive production artifacts
         uses: actions/upload-artifact@v3
         with:
