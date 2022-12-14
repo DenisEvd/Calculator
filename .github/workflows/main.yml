@@ -11,9 +11,7 @@ jobs:
       - name: Install requirements
         run: pip install pytest
       - name: Run tests
-        run: coverage run calculator_test.py
-      - name: Tests report
-        run: coverage report
+        run: run calculator_test.py
   compile:
     needs: [run_tests]
     runs-on: [ubuntu-latest]
