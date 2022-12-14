@@ -1,0 +1,38 @@
+on: [push]
+jobs:
+  run_tests:
+    runs-on: [ubuntu-latest]
+    steps:
+      - uses: actions/checkout@master
+      - uses: actions/setup-python@v1
+        with: 
+          python-version: '3.8'
+          architecture: 'x64'
+      - name: Install requirements
+        run: pip install -r requirements.txt
+      - name: Run tests
+        run: coverage run tests.py
+      - name: Tests report
+        run: coverage report
+  compile:
+    needs: [run_tests]
+    runs-on: [ubuntu-latest]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: compile to exe
+        run: |
+          pip install pyinstaller
+          pyinstaller --onefile Calculator.py
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: CalcMain
+          path: |
+            dist
+            !dist/**/*.exe
+      - name: Archive code coverage results
+        uses: actions/upload-artifact@v3
+        with:
+          name: code-coverage-report
+          path: output/test/code-coverage.html
